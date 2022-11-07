@@ -1,64 +1,40 @@
-const express = require("express");
-const exphbs = require("express-handlebars");
-const sequelize = require("./config/connection");
-const session = require("express-session");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
+const routes = require('./controllers');
+const helpers = require('./utils/helpers');
 
-// Sets up the Express App
-// =============================================================
+const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 const app = express();
-const PORT = process.env.PORT || 3000;
-// Requiring our models for syncing
-const { User } = require("./models");
+const PORT = process.env.PORT || 3001;
 
-// Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const hbs = exphbs.create({ helpers });
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 2 * 60 * 60 * 1000,
-    },
-    store: new SequelizeStore({
-      db: sequelize,
-    }),
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
   })
-);
+};
 
-// Static directory
-app.use(express.static("public"));
+app.use(session(sess));
 
-const hbs = exphbs.create({});
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
-const userRoutes = require("./controllers/userController");
-app.use("/api/users", userRoutes);
-const sneakerRoutes = require("./controllers/sneakerController");
-app.use("/api/sneakers", sneakerRoutes);
-const frontEndRoutes = require("./controllers/frontEndController");
-app.use(frontEndRoutes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/get-session", (req, res) => {
-  res.json(req.session);
+app.use(routes);
+
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });
-
-app.get("/setcolor/:color", (req, res) => {
-  req.session.favColor = req.params.color;
-  res.json(req.session);
-});
-
-app.get("/logout",(req,res)=>{
-    req.session.destroy();
-    res.send("logged out !")
-})
-
-sequelize.sync({ force: false }).then(function () {
-  app.listen(PORT, function () {
-    console.log("App listening on PORT " + PORT);
-  });
-});
+=
