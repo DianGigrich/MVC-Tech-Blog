@@ -1,32 +1,19 @@
 const router = require('express').Router();
-const { User } = require('../models');
-const withAuth = require('../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
-  try {
-    const userData = await User.findAll({
-      attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
-    });
+//this makes the api file to be seen and made into main route
+const apiRoutes = require('./api');
 
-    const users = userData.map((project) => project.get({ plain: true }));
+//this makes the frontEndRoute file to be seen and made into main route
+const frontEndRoutes = require("./frontEndRoutes")
 
-    res.render('homepage', {
-      users,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// anything tagged with apiRoutes makes /api the path
+router.use('/api', apiRoutes);
 
-router.get('/login', (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-    return;
-  }
+// this makes the router just the base localhost:3001/
+router.use(frontEndRoutes);
 
-  res.render('login');
+router.use((req, res) => {
+  res.send("<h1>Wrong Route!</h1>")
 });
 
 module.exports = router;

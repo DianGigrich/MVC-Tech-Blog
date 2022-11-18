@@ -1,34 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const { Post,Owner} = require("../models")
+const { Post, Comment} = require("../models")
 
 
-router.get("/", (req, res) => {
-  Post.findAll({
-    attributes:["name","isCute"],
-    include:[{
-      model:Owner,
-      attributes:["username"]
-    }]
-  })
-    .then((allPosts) => {
-      res.json(allPosts);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: err });
-    });
-});
-// router.get("/", async (req, res) => {
-//   try {
-//     const allPosts = await Post.findAll();
-//     res.json(allPosts);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ err: err });
-//   }
-
+// router.get("/", (req, res) => {
+//   Post.findAll({
+//     attributes:["name","isCute"],
+//     include:[{
+//       model:Owner,
+//       attributes:["username"]
+//     }]
+//   })
+//     .then((allPosts) => {
+//       res.json(allPosts);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json({ err: err });
+//     });
 // });
+router.get("/", async (req, res) => {
+  try {
+    const allPosts = await Post.findAll({
+      include: [{
+        model:Comment
+      }]
+    });
+    res.json(allPosts);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: err });
+  }
+
+});
 
 router.get("/:id", (req, res) => {
   Post.findByPk(req.params.id)

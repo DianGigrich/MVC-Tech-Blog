@@ -10,6 +10,9 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
+  
+  await seedPosts();
+  await seedComments();
 
   process.exit(0);
 };
