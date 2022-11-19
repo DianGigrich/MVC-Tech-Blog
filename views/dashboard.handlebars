@@ -1,0 +1,16 @@
+{{#each users as |user| }}
+<div class="row align-center mb-5">
+  <div class="col-md-6">
+    <h2>{{post.title}}</h2>
+    <nav>created by {{username}} at {{post.createdAt}}</nav>
+  </div>
+  <div>
+    {{post.post}}
+  </div>
+  <p>{{comment.comment}} by {{comment.UserId}} at {{comment.createdAt}}</p>
+  <div class="col-md-6">
+    <h3></h3>
+  </div>
+</div>
+{{/each}}
+dashboard

@@ -1,33 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const { Comment, Post} = require("../models")
+const { Comment, User, Post} = require("../../models")
 
-
-// router.get("/", (req, res) => {
-//   Comment.findAll({
-//     attributes:["name","isCute"],
-//     include:[{
-//       model:Owner,
-//       attributes:["username"]
-//     }]
-//   })
-//     .then((allComment) => {
-//       res.json(allComment);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json({ err: err });
-//     });
-// });
 router.get("/", async (req, res) => {
   try {
-    const allComment = await Comment.findAll();
+    const allComment = await Comment.findAll({
+      include:[{
+        model: User
+      }]
+    });
     res.json(allComment);
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: err });
   }
-
 });
 
 router.get("/:id", (req, res) => {
@@ -41,13 +27,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.Comment("/", (req, res) => {
+router.post("/", (req, res) => {
   console.log(req.body);
   Comment.create({
-    name: req.body.name,
-    species: req.body.species,
-    age: req.body.age,
-    isCute: req.body.isCute,
+    comment: req.body.comment
   })
     .then((data) => {
       res.status(201).json(data);
@@ -61,10 +44,7 @@ router.Comment("/", (req, res) => {
 router.put("/:id", (req, res) => {
   Comment.update(
     {
-      name: req.body.name,
-      species: req.body.species,
-      age: req.body.age,
-      isCute: req.body.isCute,
+      comment: req.body.comment,
     },
     {
       where: {

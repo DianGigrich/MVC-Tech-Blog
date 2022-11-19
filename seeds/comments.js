@@ -2,15 +2,18 @@ const { Comment } = require('../models');
 
 const comments = [
     {
-        comment: "LionHeartLove",
+        comment: "This was terrible post.",
+        PostId: 1,
         UserId: 1,
     },
     {
-        comment: "Jaws of The Lion",
-        UserId: 2,
+        comment: "I think so too!",
+        PostId: 2,
+        UserId: 1,
     },
     {
-        comment: "Matt is the best",
+        comment: "This is a comment",
+        PostId: 3,
         UserId: 1,
     },
 ]

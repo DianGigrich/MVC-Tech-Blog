@@ -3,8 +3,14 @@ const Post = require('./Post');
 const Comment = require('./Comment');
 
 User.hasMany(Post)
-Comment.hasMany(User)
+Post.belongsTo(User)
+
 Post.hasMany(Comment)
+Comment.belongsTo(Post)
+
+User.hasMany(Comment)
+Comment.belongsTo(User)
+
 
 
 

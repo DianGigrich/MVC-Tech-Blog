@@ -2,15 +2,18 @@ const { Post } = require('../models');
 
 const posts = [
     {
-        name: "LionHeartLove",
+        title: "Is this post great?",
+        post: "Here is a great post. The greatest post.",
         UserId: 1,
     },
     {
-        name: "Jaws of The Lion",
-        UserId: 2,
+        title: "I love tech blogs.",
+        post: "Here we go here we go here we go!",
+        UserId: 1,
     },
     {
-        name: "Matt is the best",
+        title: "Third post title",
+        post: "If I had more to say, I'd write it here.",
         UserId: 1,
     },
 ]
