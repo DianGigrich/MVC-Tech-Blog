@@ -58,14 +58,10 @@ router.get("/user/:id", async (req, res) => {
       }]
     })
 
-    const frontData = userData.map((campaign) =>
-      campaign.get({ plain: true })
-    );
-
-    res.render("dashboard", {
-      users: frontData,
-      logged_in: req.session.logged_in,
-    });
+    const hbsData = userData.toJSON();
+        console.log(hbsData)
+        hbsData.logged_in=req.session.logged_in
+        res.render("dashboard",hbsData)
   } catch (err) {
     res.status(500).json(err);
   }
