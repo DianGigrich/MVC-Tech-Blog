@@ -1,13 +1,13 @@
 TODO:
-const postForm = document.querySelectorAll("#postForm");
+const savePost = document.querySelectorAll("#savePost");
 
-for (let i = 0; i < postForm.length; i++) {
-    postForm[i].addEventListener("click", event => {
+for (let i = 0; i < savePost.length; i++) {
+    savePost[i].addEventListener("submit", event => {
         event.preventDefault();
 
         const userObj = {
-            comment: document.querySelector("#enteredComment").value,
-            postId: event.target.getAttribute('data-bs-target').value
+            title: document.getElementById('postTitle').value,
+            post: document.querySelector("#enteredpost").value
         }
         fetch("/api/comments/", {
             method: "POST",

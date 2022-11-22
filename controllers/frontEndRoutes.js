@@ -18,7 +18,7 @@ router.get('/', withAuth, async (req, res) => {
 
     res.render('homepage', {
       users,
-      logged_in: req.session.logged_in,
+      loggedIn: req.session.loggedIn,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -26,7 +26,7 @@ router.get('/', withAuth, async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     res.redirect('/');
     return;
   }
@@ -51,8 +51,7 @@ router.get("/user/:id", async (req, res) => {
     }
     const userData = await User.findByPk(req.params.id, {
       include: [{
-        model: Post,
-        attributes: ["title", "post", "createdAt", "CommentId"]
+        model: Post
       }, {
         model: Comment
       }]
@@ -60,7 +59,7 @@ router.get("/user/:id", async (req, res) => {
 
     const hbsData = userData.toJSON();
         console.log(hbsData)
-        hbsData.logged_in=req.session.logged_in
+        hbsData.loggedIn=req.session.loggedIn
         res.render("dashboard",hbsData)
   } catch (err) {
     res.status(500).json(err);

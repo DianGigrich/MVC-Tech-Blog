@@ -7,7 +7,11 @@ router.get("/", async (req, res) => {
   try {
     const allPosts = await Post.findAll({
       include: [{
-        model:Comment
+        model:Comment,
+        attributes: [
+          'comment',
+          'userId',
+        ]
       },{
         model:User
       }]
@@ -17,7 +21,6 @@ router.get("/", async (req, res) => {
     console.log(err);
     res.status(500).json({ err: err });
   }
-
 });
 
 router.get("/:id", (req, res) => {
@@ -32,17 +35,17 @@ router.get("/:id", (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  if(!req.session.logged_in){
+  if(!req.session.loggedIn){
     return res.status(401).json({msg:"You must first login."})
   }
   try {
-    const newProject = await Project.create({
+    const newPost = await Post.create({
       title: req.body.title,
       post: req.body.post,
-      UserId: req.session.UserId,
+      UserId: req.session.userId,
     });
 
-    res.status(200).json(newProject);
+    res.status(200).json(newPost);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -73,23 +76,23 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  if(!req.session.logged_in){
+  if(!req.session.loggedIn){
     return res.status(401).json({msg:"login first joetato!"})
   }
   try {
-    const projectData = await Project.destroy({
+    const postData = await Post.destroy({
       where: {
         id: req.params.id,
         UserId: req.session.UserId,
       },
     });
 
-    if (!projectData) {
-      res.status(404).json({ message: 'No project found with this id!' });
+    if (!postData) {
+      res.status(404).json({ message: 'No post found with this id!' });
       return;
     }
 
-    res.status(200).json(projectData);
+    res.status(200).json(postData);
   } catch (err) {
     res.status(500).json(err);
   }

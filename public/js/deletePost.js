@@ -4,7 +4,7 @@ for (let i = 0; i < deleteBtn.length; i++) {
     deleteBtn[i].addEventListener("click", event => {
         event.preventDefault();
 
-        postId: event.target.getAttribute('data-bs-target').value
+        const postId = event.target.getAttribute('data-bs-target').value
 
         fetch(`/api/posts/${postId}`, {
             method: "DELETE",
@@ -12,7 +12,7 @@ for (let i = 0; i < deleteBtn.length; i++) {
         }).then(res => {
             if (res.ok) {
                 alert("success!")
-                return res.json(), location.reload()
+                return location.reload()
             } else {
                 alert("trumpet sound")
                 location.reload();

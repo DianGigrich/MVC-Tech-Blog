@@ -7,8 +7,7 @@ const bcrypt = require("bcrypt")
 router.get("/", (req, res) => {
   User.findAll({
     include: [{
-      model: Post,
-      attributes: ["title", "post", "createdAt"]
+      model: Post
     }, {
       model: Comment
     }]
@@ -20,6 +19,7 @@ router.get("/", (req, res) => {
     res.status(500).json({ err })
   })
 })
+
 //signup
 router.post('/', async (req, res) => {
   try {
@@ -36,6 +36,7 @@ router.post('/', async (req, res) => {
 
 //login
 router.post("/login", (req, res) => {
+  console.log(req.body)
   User.findOne({
     where: {
       username: req.body.username
@@ -43,10 +44,12 @@ router.post("/login", (req, res) => {
   }).then(foundUser => {
     if (!foundUser) {
       //wrong username
-      return res.status(401).json({ msg: "invalid login!" })
+      console.log("wrong username")
+      return res.status(401).json({ msg: "invalid username!" })
     } else if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
       //wrong password
-      return res.status(401).json({ msg: "invalid login!" })
+      console.log("wrong password")
+      return res.status(401).json({ msg: "invalid password!" })
     } else {
       req.session.userId = foundUser.id;
       req.session.loggedIn = true;

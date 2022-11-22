@@ -1,8 +1,8 @@
-{{#each users as |user| }}
+{{#each Posts as |post| }}
 <div class=" card row align-center mb-5">
     <div class="col-md-6">
         <h2 class="card-title">{{post.title}}</h2>
-        <nav card="card-subtitle">created by {{username}} at {{post.createdAt}}</nav>
+        <nav card="card-subtitle">created by {{userId.username}} at {{post.createdAt}}</nav>
     </div>
     <p class="card-body">
         {{post.post}}
@@ -49,16 +49,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <input class="form-control" id="postTitle" rows="4" placeholder="..."></input>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="enteredpost" rows="4" placeholder="..."></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary savePost">Save</button>
             </div>
         </div>
     </div>
