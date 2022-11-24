@@ -1,64 +1,75 @@
-{{#each Posts as |post| }}
+<script>
+$(document).ready(function(){
+    $('#createShowForm').click(function() {
+      $('.createFormthing').toggle("slide");
+    });
+});
+</script>
+
+<h2>Welcome {{username}}</h2>
+<div>
+    <button type="button" class="btn btn-primary postForm" data-bs-toggle="modal" id="createShowForm" >
+        Create a Post
+    </button>
+</div>
+    <form class="createFormthing" style="display: none;" id="savePost" data-id="{{id}}">
+        <div class="modal-content">
+              <div class="mb-3">
+                <input class="form-control" id="postTitle" rows="4" placeholder="..."></input>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" id="enteredPost" rows="4" placeholder="..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="createShowForm">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+{{#each Posts as |post|}}
+{{!-- update form --}}
+<div class="modal" id="updateModalForm" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="mb-3">
+                <input class="form-control" id="updatedTitle" rows="4">{{post.title}}</input>
+            </div>
+            <div class="modal-body mb-3">
+                <textarea class="form-control" id="updatedPost" rows="3">{{post.post}}</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class=" card row align-center mb-5">
     <div class="col-md-6">
-        <h2 class="card-title">{{post.title}}</h2>
-        <nav card="card-subtitle">created by {{userId.username}} at {{post.createdAt}}</nav>
+        <h2 class="card-title">{{title}}</h2>
+        {{!-- TODO:username still not showing up --}}
+        <nav card="card-subtitle">Created at {{format_date createdAt}}</nav>
     </div>
     <p class="card-body">
         {{post.post}}
     </p>
-    <div class="card">
-        <p class="card-text">{{comment.comment}} </p>
-        <p class="card-subtitle">by {{comment.UserId}} at {{comment.createdAt}}</p>
-    </div>
-    {{!-- update button --}}
-    <button type="button" class="btn btn-primary commentForm" data-bs-toggle="modal" data-bs-target="{{post.id}}">
-        Update Post
-    </button>
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label" placeholder="comment"></label>
-                    <textarea class="form-control" id="enteredComment" rows="3"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary deleteBtn" data-bs-toggle="modal" data-bs-target="{{post.id}}">
-        Delete
-    </button>
-</div>
-</div>
-{{/each}}
-<button type="button" class="btn btn-primary postForm" data-bs-toggle="modal">
-    Create a Post
+</div> {{!-- update button --}}
+{{!-- delete button --}}
+<button type="button" class="btn btn-primary deleteBtn"  data-set="{{post.id}}">
+    Delete
 </button>
-<div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="mb-3">
-                <input class="form-control" id="postTitle" rows="4" placeholder="..."></input>
-            </div>
-            <div class="mb-3">
-                <textarea class="form-control" id="enteredpost" rows="4" placeholder="..."></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary savePost">Save</button>
-            </div>
-        </div>
-    </div>
+
+<button type="button" class="btn btn-primary updateForm" data-bs-toggle="modal" data-bs-target="#updateModalForm" data-set="{{post.id}}" >
+    Update Post
+</button>
+
+{{/each}}
 </div>
-</div>
+
+<script src="/js/deletepost.js"></script>
+<script src="/js/createpost.js"></script>
+{{!-- <script src="/js/updatepost.js"></script> --}}

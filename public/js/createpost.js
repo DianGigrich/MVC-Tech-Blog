@@ -1,28 +1,28 @@
-TODO:
-const savePost = document.querySelectorAll("#savePost");
+const savePost = document.querySelector("#savePost");
 
-for (let i = 0; i < savePost.length; i++) {
-    savePost[i].addEventListener("submit", event => {
-        event.preventDefault();
+savePost.addEventListener("submit", event => {
+    event.preventDefault();
+   
+    const userObj = {
+        title: document.getElementById('postTitle').value,
+        post: document.getElementById('enteredPost').value,
+        userId: event.target.getAttribute('data-id')
+    }
 
-        const userObj = {
-            title: document.getElementById('postTitle').value,
-            post: document.querySelector("#enteredpost").value
+    console.log(userObj)
+    fetch("/api/posts/", {
+        method: "POST",
+        body: JSON.stringify(userObj),
+        headers: {
+            "Content-Type": "application/json"
         }
-        fetch("/api/comments/", {
-            method: "POST",
-            body: JSON.stringify(userObj),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(res => {
-            if (res.ok) {
-                alert("success!")
-                return res.json(), location.reload()
-            } else {
-                alert("trumpet sound")
-                location.reload();
-            }
-        })
+    }).then(res => {
+        if (res.ok) {
+            return 
+            // location.reload()
+            
+        } else {
+            location.reload();
+        }
     })
-}
+})

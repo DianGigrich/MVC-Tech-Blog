@@ -12,13 +12,7 @@ Post.init({
     post: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    // createdAt: {
-    //     type: DataTypes.DATE,
-    //     get() {
-    //         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY')
-    //     }
-    // }
+    }
 },
     {
         sequelize

@@ -4,12 +4,14 @@ const { Comment, User, Post} = require("../../models")
 
 router.get("/", async (req, res) => {
   try {
-    const allcoments = await Comment.findAll({
+    const comments = await Comment.findAll({
       include:[{
         model: User
+      },{
+        model:Post
       }]
     });
-    res.json(allcoments);
+    res.json(comments);
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: err });
@@ -30,33 +32,12 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   console.log(req.body);
   Comment.create({
-    comment: req.body.comment
+    comment: req.body.comment,
+    PostId: req.body.postId,
+    UserId: req.session.userId
   })
     .then((data) => {
       res.status(201).json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: err });
-    });
-});
-
-router.put("/:id", (req, res) => {
-  Comment.update(
-    {
-      comment: req.body.comment,
-    },
-    {
-      where: {
-        id: req.params.id,
-      },
-    }
-  )
-    .then((updatedComment) => {
-      if (updatedComment[0] === 0) {
-        return res.status(404).json({ msg: "no Comment found!" });
-      }
-      res.json(updatedComment);
     })
     .catch((err) => {
       console.log(err);

@@ -51,7 +51,7 @@ router.post("/login", (req, res) => {
       console.log("wrong password")
       return res.status(401).json({ msg: "invalid password!" })
     } else {
-      req.session.userId = foundUser.id;
+      req.session.UserId = foundUser.id;
       req.session.loggedIn = true;
       res.json(foundUser);
     }

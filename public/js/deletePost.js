@@ -1,10 +1,10 @@
 const deleteBtn = document.querySelectorAll("deleteBtn");
 
 for (let i = 0; i < deleteBtn.length; i++) {
-    deleteBtn[i].addEventListener("click", event => {
+    deleteBtn[i].addEventListener("submit", event => {
         event.preventDefault();
 
-        const postId = event.target.getAttribute('data-bs-target').value
+        const postId = event.target.getAttribute('data-set')
 
         fetch(`/api/posts/${postId}`, {
             method: "DELETE",

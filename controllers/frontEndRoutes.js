@@ -2,22 +2,30 @@ const router = require('express').Router();
 const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
+// home
+router.get('/', async (req, res) => {
   try {
     const postData = await Post.findAll({
-      include: [{
-        moder:User,
+      include: [
+        {
+        model:User,
         attributes: { exclude: ['password'] },
-      },{
+      },
+      {
         model:Comment
-      }],
+      }
+    ],
       order: [['createdAt', 'ASC']],
     });
 
-    const users = postData.map((project) => project.get({ plain: true }));
-
+    const userposts = postData.map((project) => project.get({ plain: true }));
+const userData = await User.findAll({
+exclude: ['password']
+})
+const users = userData.map((project) => project.get({ plain: true }));
     res.render('homepage', {
-      users,
+      posts: userposts,
+      user: userData,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -25,6 +33,7 @@ router.get('/', withAuth, async (req, res) => {
   }
 });
 
+// login
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
@@ -34,6 +43,7 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// signup
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
     return res.redirect(`/user/${req.session.userId}`)
@@ -44,6 +54,30 @@ router.get('/signup', (req, res) => {
   })
 })
 
+// post comment
+router.get("/post/:id", async (req, res) => {
+  if (req.session.loggedIn) {
+    return res.redirect(`/user/${req.session.userId}`)
+  }
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [{
+        model: Comment,
+      },{
+        model: User
+      }
+    ]
+    })
+    
+        const hbsData = postData.toJSON();
+        hbsData.loggedIn=req.session.loggedIn
+        res.render("postcomment",hbsData)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// dashboard
 router.get("/user/:id", async (req, res) => {
   try {
     if (!req.session.loggedIn) {
@@ -52,8 +86,6 @@ router.get("/user/:id", async (req, res) => {
     const userData = await User.findByPk(req.params.id, {
       include: [{
         model: Post
-      }, {
-        model: Comment
       }]
     })
 
