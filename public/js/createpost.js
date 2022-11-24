@@ -18,8 +18,8 @@ savePost.addEventListener("submit", event => {
         }
     }).then(res => {
         if (res.ok) {
-            return 
-            // location.reload()
+            return location.reload()
+            
             
         } else {
             location.reload();
