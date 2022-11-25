@@ -1,6 +1,5 @@
 
 const updateBtn = document.querySelectorAll(".updateForm");
-// const updateBtn = document.getElementById('createShowUpdateForm')
 
 for (let i = 0; i < updateBtn.length; i++) {
     updateBtn[i].addEventListener("submit", event => {

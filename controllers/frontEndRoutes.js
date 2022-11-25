@@ -1,31 +1,32 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../models');
-const withAuth = require('../utils/auth');
+
 
 // home
 router.get('/', async (req, res) => {
+
   try {
-    const postData = await Post.findAll({
+     const postData = await Post.findAll({
       include: [
         {
-        model:User,
-        attributes: { exclude: ['password'] },
-      },
-      {
-        model:Comment
-      }
-    ],
+          model: User,
+          attributes: { exclude: ['password'] },
+        },
+        {
+          model: Comment
+        }
+      ],
       order: [['createdAt', 'ASC']],
     });
 
     const userposts = postData.map((project) => project.get({ plain: true }));
-const userData = await User.findAll({
-exclude: ['password']
-})
-const users = userData.map((project) => project.get({ plain: true }));
+    const userData = await User.findAll({
+      exclude: ['password']
+    })
+    const users = userData.map((project) => project.get({ plain: true }));
     res.render('homepage', {
       posts: userposts,
-      user: userData,
+      user: users,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -44,34 +45,31 @@ router.get('/login', (req, res) => {
 });
 
 // signup
-router.get('/signup', (req, res) => {
-  if (req.session.loggedIn) {
+router.get("/signup", (req, res) => {
+   if (req.session.loggedIn) {
     return res.redirect(`/user/${req.session.userId}`)
   }
-  res.render("signup", {
-    loggedIn: false,
-    userId: null
-  })
-})
+  res.render("signup", {});
+});
 
 // post comment
 router.get("/post/:id", async (req, res) => {
-  if (req.session.loggedIn) {
-    return res.redirect(`/user/${req.session.userId}`)
+  if(!req.session.loggedIn){
+    return res.redirect('/login')
   }
   try {
     const postData = await Post.findByPk(req.params.id, {
       include: [{
         model: Comment,
-      },{
+      }, {
         model: User
       }
-    ]
+      ]
     })
-    
-        const hbsData = postData.toJSON();
-        hbsData.loggedIn=req.session.loggedIn
-        res.render("postcomment",hbsData)
+
+    const hbsData = postData.toJSON();
+    hbsData.loggedIn = req.session.loggedIn
+    res.render("postcomment", hbsData)
   } catch (err) {
     res.status(500).json(err);
   }
@@ -90,9 +88,9 @@ router.get("/user/:id", async (req, res) => {
     })
 
     const hbsData = userData.toJSON();
-        console.log(hbsData)
-        hbsData.loggedIn=req.session.loggedIn
-        res.render("dashboard",hbsData)
+    console.log(hbsData)
+    hbsData.loggedIn = req.session.loggedIn
+    res.render("dashboard", hbsData)
   } catch (err) {
     res.status(500).json(err);
   }

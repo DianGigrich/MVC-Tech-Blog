@@ -25,7 +25,10 @@ Login in or sign up to be able to post.  You can add comments from the home page
       
 ## Screenshot:
 ![Screenshot of project](screenshot.png)
-      
+ The following animation demonstrates the application functionality:
+
+![Animation cycles through signing into the app, clicking on buttons, and updating blog posts.](./Assets/14-mvc-homework-demo-01.gif) 
+     
 ## Credits
 The TAs at bootcamp.  Joe Rehfuss for teaching us. W3Schools, Mozilla, and StackOverflow.
 

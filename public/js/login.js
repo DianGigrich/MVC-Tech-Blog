@@ -14,10 +14,9 @@ loginForm.addEventListener("submit",e=>{
         }
     }).then(res=>{
         if(res.ok){
-           alert("success!")
            return res.json();
         } else {
-            alert("trumpet sound")
+            alert("incorrect")
             location.reload();
         }
     }).then(data=>{
