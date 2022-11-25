@@ -2,7 +2,7 @@
 # MVC-Tech-Blog
 
 ## Description
-T
+A tech blog. You can sign in, sign up, comment, and create posts! 
       
 ## Table of Contents
 * [Installation](#installation)
@@ -11,24 +11,24 @@ T
 * [Credits](#credits)
 * [License](#license)
 * [Contributing](#contributing)
-* [Tests](#tests)
 * [Questions](#questions)
       
 ## Installation
 Once we have our Github, terminal, and vscode ready to go, we need to:
 npm i
-npm install inquirer
-npm install fs
+npm run seed
+node server.js
       
 ## Usage
 Login in or sign up to be able to post.  You can add comments from the home page or create, update, and delete comments in your dashboard.
       
 ## Screenshot:
-![Screenshot of project](screenshot.png)
- The following animation demonstrates the application functionality:
+![Screenshot of project](./assets/Screenshot.png)
 
-![Animation cycles through signing into the app, clicking on buttons, and updating blog posts.](./Assets/14-mvc-homework-demo-01.gif) 
-     
+ The following video demonstrates the application functionality:
+
+![Animation cycles through signing into the app, clicking on buttons, and updating blog posts.](./assets/video.webm) 
+
 ## Credits
 The TAs at bootcamp.  Joe Rehfuss for teaching us. W3Schools, Mozilla, and StackOverflow.
 
@@ -37,12 +37,8 @@ The TAs at bootcamp.  Joe Rehfuss for teaching us. W3Schools, Mozilla, and Stack
 This application is covered under [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/). See repo for license.
       
 ## Contributing
-I still don't understand how to contribute. Someday I will and this is a start!
-[Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)]
-      
-## Tests
-[Link to test](https://drive.google.com/file/d/192geTIdJvAGMsAkrfL3bAcioB3VzEqk8/view)
-      
+You needn't contribute, but if you'd like to, please follow the rules in the repo.
+  
 ## Questions
 [Link to diangigrich's GitHub](https://github.com/diangigrich)
 
