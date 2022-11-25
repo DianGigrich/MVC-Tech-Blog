@@ -21,13 +21,13 @@ npm install inquirer
 npm install fs
       
 ## Usage
-Enter "node index.js" into your command terminal,
+Login in or sign up to be able to post.  You can add comments from the home page or create, update, and delete comments in your dashboard.
       
 ## Screenshot:
 ![Screenshot of project](screenshot.png)
       
 ## Credits
-The TAs at bootcamp: Henry Weigand and Lindsey Fitzgerald, 
+The TAs at bootcamp.  Joe Rehfuss for teaching us. W3Schools, Mozilla, and StackOverflow.
 
 
 ## License

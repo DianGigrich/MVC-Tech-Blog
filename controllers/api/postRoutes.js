@@ -81,7 +81,7 @@ router.put("/:id", (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   if(!req.session.loggedIn){
-    return res.status(401).json({msg:"login first joetato!"})
+    return res.status(401).json({msg:"login first"})
   }
   try {
     const postData = await Post.destroy({

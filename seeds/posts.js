@@ -3,17 +3,17 @@ const { Post } = require('../models');
 const posts = [
     {
         title: "Is this post great?",
-        post: "Here is a great post. The greatest post.",
+        post: "Four Score and Seven years ago, our fathers brought forth on this continent a new nation conceived in liberty and dedicated to the proposition that all men are created equal.",
         UserId: 1,
     },
     {
         title: "I love tech blogs.",
-        post: "Here we go here we go here we go!",
+        post: "This post will be even longer.  I made it so.  What do you think? Is it longer? It's the longest!!!",
         UserId: 1,
     },
     {
         title: "Third post title",
-        post: "If I had more to say, I'd write it here.",
+        post: "Third post and nothing to say. Ipsem lorem I presume.",
         UserId: 1,
     },
 ]

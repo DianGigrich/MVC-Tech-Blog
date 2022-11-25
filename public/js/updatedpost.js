@@ -1,27 +1,22 @@
 
+const updateBtn = document.querySelectorAll(".updateForm");
+// const updateBtn = document.getElementById('createShowUpdateForm')
 
-// const createUpdate = document.querySelectorAll('#createShowUpdateForm')
-
-// for (let j = 0; j < createUpdate.length; j++) {
-//     createUpdate[j].addEventListener("click", event => {
-//         event.preventDefault();
-//         $('.updateForm').classList.toggle("slide");
-
-//     })
-// }
-
-const updateForm = document.querySelectorAll("updateForm");
-
-for (let i = 0; i < updateForm.length; i++) {
-    updateForm[i].addEventListener("submit", event => {
+for (let i = 0; i < updateBtn.length; i++) {
+    updateBtn[i].addEventListener("submit", event => {
         event.preventDefault();
-        // document.querySelectorAll('createFormthing').style.display = 'none';
-        // postId = document.getAttribute('data-set')
+        console.log("click")
 
+        postId = event.target.getAttribute('data-set')
+        console.log(postId)
+
+ 
         const userObj = {
             title: document.getElementById('updatedtitle').value,
-            post: document.querySelector("#updatedpost").value
+            post: document.getElementById("updatedpost").value
         }
+
+        console.log(userObj)
         fetch(`/api/posts/${postId}`, {
             method: "PUT",
             body: JSON.stringify(userObj),
@@ -30,10 +25,8 @@ for (let i = 0; i < updateForm.length; i++) {
             }
         }).then(res => {
             if (res.ok) {
-                alert("Jolly good ol' fellow!")
-                return location.reload()
+                return  location.reload()
             } else {
-
                 location.reload();
             }
         })

@@ -1,4 +1,4 @@
-const deleteBtn = document.querySelectorAll("deleteBtn");
+const deleteBtn = document.querySelectorAll(".deleteBtn");
 
 for (let i = 0; i < deleteBtn.length; i++) {
     deleteBtn[i].addEventListener("click", event => {
@@ -13,8 +13,7 @@ console.log(postId)
         }).then(res => {
             if (res.ok) {
 
-                return 
-                // location.reload()
+                return  location.reload()
             } else {
 
                 location.reload();
